@@ -25,4 +25,4 @@ jobs:
       - name: Lint styles
         run: npm run stylelint
       - name: Run tests
-        run: npm test
+        run: npm test --watch=false
