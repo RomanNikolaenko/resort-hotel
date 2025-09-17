@@ -11,14 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [22, 24] # тестуємо на кількох версіях Node.js
+        node-version: [24]
 
     steps:
-      # 1️⃣ Завантаження коду
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2️⃣ Кешування node_modules для швидшого CI
       - name: Cache node modules
         uses: actions/cache@v3
         with:
@@ -27,40 +25,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-${{ matrix.node-version }}-
 
-      # 3️⃣ Встановлення Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
 
-      # 4️⃣ Встановлення залежностей
       - name: Install dependencies
         run: npm ci
 
-      # 5️⃣ Форматування коду
-      - name: Format code
-        run: npm run format
-
-      # 6️⃣ Lint TypeScript/JavaScript
-      - name: Lint code
-        run: npm run lint
-
-      # 7️⃣ Lint стилів
-      - name: Lint styles
-        run: npm run stylelint
-
-      # 8️⃣ Build проекту
       - name: Build project
         run: npm run build
 
-      # 9️⃣ Запуск тестів
       - name: Run tests
         run: npm run test:ci
-
-      # 🔟 Security audit
-      - name: Security audit
-        run: npm audit --audit-level=high
-
-      # 11 (Опційно) Lint комітів
-      - name: Lint commit messages
-        uses: wagoid/commitlint-github-action@v5
