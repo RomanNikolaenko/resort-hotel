@@ -15,7 +15,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
       - name: Install dependencies
         run: npm ci
       - name: Lint TypeScript/JavaScript
@@ -25,4 +25,4 @@ jobs:
       - name: Lint styles
         run: npm run stylelint
       - name: Run tests
-        run: npm test:ci
+        run: npm run test:ci
