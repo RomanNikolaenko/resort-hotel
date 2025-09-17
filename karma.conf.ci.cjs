@@ -1,33 +1,33 @@
-// karma.conf.dev.cjs
 module.exports = function (config) {
   config.set({
     basePath: '',
-    frameworks: ['jasmine', '@angular-devkit/build-angular'],
+    frameworks: ['jasmine'],
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
-      require('karma-jasmine-html-reporter'),
       require('karma-coverage'),
-      require('@angular-devkit/build-angular/plugins/karma'),
     ],
 
     client: {
       jasmine: {},
-      clearContext: false, // показуємо тести у браузері
+      clearContext: true, // без GUI, потрібен лише headless
     },
 
-    reporters: ['progress', 'kjhtml'],
+    reporters: ['progress'],
 
     coverageReporter: {
       dir: require('path').join(__dirname, './coverage'),
       subdir: '.',
-      reporters: [{ type: 'html' }, { type: 'text-summary' }],
+      reporters: [{ type: 'lcovonly' }, { type: 'text-summary' }],
     },
 
     port: 9876,
     colors: true,
-    logLevel: config.LOG_INFO,
-    autoWatch: true,
+    logLevel: config.LOG_WARN,
+
+    autoWatch: false,
+    singleRun: true,
+    restartOnFileChange: false,
 
     browsers: ['ChromeHeadlessCustom'],
 
@@ -49,8 +49,5 @@ module.exports = function (config) {
     browserDisconnectTolerance: 3,
     browserNoActivityTimeout: 120000,
     captureTimeout: 120000,
-
-    singleRun: false,
-    restartOnFileChange: true,
   });
 };
